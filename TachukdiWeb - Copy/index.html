@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+  <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+  <script src="Scripts/jquery-3.3.1.min.js"></script>
+  <script src="Scripts/knockout/knockout-latest.min.js"></script>
+  <script src="Scripts/moment.js/moment.min.js"></script>
+  <script src="Scripts/MainScript.js"></script>
+</head>
+<body>
+  <ons-page id="home">
+    <ons-toolbar>
+      <div class="center">Tachukdi</div>
+    </ons-toolbar>
+    <ons-list data-bind="foreach: cityBlocks" id="cityBlocks">
+      <ons-list-item modifier="chevron" data-bind="attr: {cityid : CityId}" tappable onclick="ShowCategories(this)">
+        <div class="left">
+          <ons-icon icon="md-face" class="list-item__icon"></ons-icon>
+          <span data-bind="text: BlockCount"></span>
+        </div>
+        <div class="center">
+          <span data-bind="text: City"></span>
+        </div>
+      </ons-list-item>
+    </ons-list>
+  </ons-page>
+</body>
+</html>

@@ -1,0 +1,371 @@
+﻿@{
+    ViewBag.Title = "About";
+    Layout = null;
+}
+@*<link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">*@
+<link href="~/Scripts/onsen/css/onsenui.css" rel="stylesheet" />
+@*<link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">*@
+<link href="~/Scripts/onsen/css/onsen-css-components.min.css" rel="stylesheet" />
+@*<script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>*@
+<script src="~/Scripts/onsen/js/onsenui.min.js"></script>
+@*<script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>*@
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+@*<script src="https://unpkg.com/knockout"></script>*@
+<script src="~/Scripts/knockout/knockout-latest.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+<script src="~/Scripts/MainScript.js"></script>
+
+@*
+    https://onsen.io/v2/guide/jquery/#example-installation
+    https://onsen.io/playground/?external=https://onsen.io/playground/tutorial/other/knockout_bindings.html
+
+    https://onsen.io/v2/guide/lifecycle.html > Rev ons.getScriptPage().onInit
+
+*@
+<ons-navigator page="tabbar.html"></ons-navigator>
+
+<ons-template id="tabbar.html">
+    <ons-page id="tabbar-page">
+        <ons-toolbar>
+            <div class="center">BLK 04/03/2021</div>
+        </ons-toolbar>
+        <ons-tabbar>
+            <ons-tab page="cityblock.html" icon="ion-md-home" label="List"></ons-tab>
+            <ons-tab page="settings.html" icon="ion-md-person" label="Dashboard"></ons-tab>
+            <ons-tab page="dashboard.html" icon="ion-md-person" label="Dashboard" active></ons-tab>
+            <ons-tab page="settings.html" icon="ion-md-person" label="+ Submit Block"></ons-tab>
+            <ons-tab page="login.html" icon="ion-md-person" label="Settings"></ons-tab>
+        </ons-tabbar>
+    </ons-page>
+</ons-template>
+
+<ons-template id="cityblock.html">
+    <ons-page id="cityblock-page">
+        <ons-list data-bind="foreach: cityBlocks">
+            <ons-list-item modifier="chevron" tappable data-bind="click: $parent.detailsItem">
+                <div class="center">
+                    <span class="list-item__title" data-bind="text: City"></span>
+                    <span data-bind="text: 'Available Block: ' + BlockCount()" class="list-item__subtitle"></span>
+                </div>
+                @*<div class="center" data-bind="text: City, click: $parent.detailsItem"></div>
+                    <div class="right" data-bind="click: $parent.detailsItem">
+                        <ons-icon icon="ion-ios-trash-outline, material:md-next"></ons-icon>
+                    </div>*@
+            </ons-list-item>
+        </ons-list>
+        @*<ons-if platform="android">
+                <ons-fab position="bottom right" data-bind="click: addItem">+</ons-fab>
+            </ons-if>
+            <ons-if platform="ios other">
+                <p><ons-button modifier="large--quiet" data-bind="click: addItem">Add new item</ons-button></p>
+            </ons-if>*@
+    </ons-page>
+</ons-template>
+
+<ons-template id="Citycateblock.html">
+    <ons-page id="citycateblock-page">
+        <ons-toolbar>
+            <div class="left"><ons-back-button>Page 1</ons-back-button></div>
+            <div class="center">AHM 04/03/2021</div>
+        </ons-toolbar>
+        <ons-list data-bind="foreach: catBlocks">
+            <ons-list-item modifier="chevron" tappable>
+                <div class="center">
+                    <span class="list-item__title" data-bind="text: Category, click: $parent.detailsItem"></span>
+                    <span data-bind="text: 'Available Block: ' + BlockCount()" class="list-item__subtitle"></span>
+                </div>
+            </ons-list-item>
+        </ons-list>
+    </ons-page>
+</ons-template>
+
+<ons-template id="Dashboardblock.html">
+    <ons-page id="dashboardblock-page">
+        <ons-toolbar>
+            <div class="left"><ons-back-button>Page 1</ons-back-button></div>
+            <div class="center">AHM/CT1</div>
+        </ons-toolbar>
+        <ons-list data-bind="foreach: FullBlocks">
+            <ons-list-item modifier="longdivider">
+                <div class="center">
+                    <span class="list-item__title" data-bind="text: Content, click: $parent.detailsItem"></span>
+                    <span data-bind="text: CreatedDate" class="list-item__subtitle"></span>
+                </div>
+                <div class="right">
+                    <a data-bind="attr:{ href: 'tel:' + MobileNo()}">
+                        <ons-icon icon="ion-ios-phone, material:md-phone"></ons-icon>
+                    </a>
+                </div>
+            </ons-list-item>
+        </ons-list>
+    </ons-page>
+</ons-template>
+
+<ons-template id="details.html">
+    <ons-page id="details-page">
+        <ons-toolbar>
+            <div class="left"><ons-back-button>KO List</ons-back-button></div>
+            <div class="center">Items details</div>
+        </ons-toolbar>
+        <ons-row style="margin-top: 100px; text-align: center;">
+            <ons-col>
+                <p style="color: #666; font-size: 18px;">You clicked on: <span style="color: #999" data-bind="text: item.content"></span></p>
+            </ons-col>
+        </ons-row>
+    </ons-page>
+</ons-template>
+<ons-template id="settings.html">
+    <ons-page id="settings-page">
+        <ons-card>
+            <div class="content">
+                <ons-list>
+                    <ons-list-item><a href="#">Update Profile</a></ons-list-item>
+                    <ons-list-item><a data-bind="click:LoadPoints">Points</a></ons-list-item>
+                    <ons-list-item><a data-bind="click:LoadReferrals">Referrals</a></ons-list-item>
+                </ons-list>
+            </div>
+        </ons-card>
+        <style>
+            .content ons-list-item a {
+                color: black;
+                /* text-decoration: none; */
+                font-size: medium;
+                font-family: calibri;
+            }
+
+            .content .list-item {
+                padding: 10px;
+                background: #f5f5f5;
+                border-bottom: 1px solid gray !important;
+                margin-bottom: 2px;
+            }
+        </style>
+    </ons-page>
+</ons-template>
+
+<ons-template id="login.html">
+    <ons-page id="login-page">
+        <ons-toolbar>
+            <div class="center" data-bind="text: Title">AHM/CT1</div>
+        </ons-toolbar>
+        <div style="text-align: center; margin: 50% 0;">
+            <p>
+                <ons-input id="username" data-bind="value: UserName" modifier="underbar" placeholder="Username" float></ons-input>
+            </p>
+            <p>
+                <ons-input id="password" data-bind="value: Password" modifier="underbar" type="password" placeholder="Password" float></ons-input>
+            </p>
+            <p style="margin-top: 30px;">
+                <ons-button data-bind="click: Login">Sign In</ons-button>
+                <ons-button data-bind="click: Register">Sign Up</ons-button>
+            </p>
+        </div>
+    </ons-page>
+</ons-template>
+
+<ons-template id="points.html">
+    <ons-page id="points-page">
+        <ons-toolbar>
+            <div class="center">Points</div>
+        </ons-toolbar>
+        <div class="card">
+            <ons-list>
+                <ons-list-item>
+                    <div class="left">
+                        Total Points:
+                    </div>
+                    <div class="right">
+                        <span data-bind="text: TotalPoints"></span>
+                    </div>
+                </ons-list-item>
+            </ons-list>
+        </div>
+        @*<div class="card">*@
+        <ons-list-title>Recent 10 Transactions</ons-list-title>
+        <ons-list modifier="inset" data-bind="foreach: LastPointTransactions">
+            <ons-list-item modifier="">
+                <div class="center">
+                    <span class="list-item__title" data-bind="text: Description"></span>
+                    <span data-bind="text: TransactionDate" class="list-item__subtitle"></span>
+                </div>
+                <div class="right">
+                    <span data-bind="text: Points"></span>
+                </div>
+            </ons-list-item>
+        </ons-list>
+        @*</div>*@
+    </ons-page>
+</ons-template>
+
+<ons-template id="referrals.html">
+    <ons-page id="referrals-page">
+        <ons-toolbar>
+            <div class="center">Points</div>
+        </ons-toolbar>
+
+        <div class="card">
+            <ons-list>
+                <ons-list-item>
+                    <div class="left">
+                        Referral Code:
+                    </div>
+                    <div class="right">
+                        <span data-bind="text: ReferralId"></span>
+                    </div>
+                </ons-list-item>
+                <ons-list-item>
+                    <div class="left">Referral Mobile No:</div>
+                    <div class="right"><span data-bind="text: ReferralIdMobile"></span></div>
+                </ons-list-item>
+            </ons-list>
+        </div>
+        <div class="card">
+            <ons-list data-bind="foreach: ReferralTransactions">
+                <ons-list-item modifier="longdivider">
+                    <div class="center">
+                        <span class="list-item__title" data-bind="text: DisplayName"></span>
+                        <span data-bind="text: 'Joined On ' + moment(JoinedOn()).format('DD-MMM-YYYY')" class="list-item__subtitle"></span>
+
+                    </div>
+                    <div class="right">
+                        <span data-bind="text: Mobile" class="list-item__subtitle"></span>
+                    </div>
+                </ons-list-item>
+            </ons-list>
+        </div>
+    </ons-page>
+</ons-template>
+
+<ons-template id="dashboard.html">
+    <ons-page id="dashboard-page">
+        <ons-card>
+            <div class="title">
+                Global
+            </div>
+            <div class="content">
+                <ons-list>
+                    <ons-list-item>
+                        <div class="center">Total Cities</div>
+                        <div class="right">25</div>
+                    </ons-list-item>
+                    <ons-list-item>
+                        <div class="center">Total Active Users</div>
+                        <div class="right">25</div>
+                    </ons-list-item>
+                    <ons-list-item>
+                        <div class="center">Total Active Users In your city</div>
+                        <div class="right">25</div>
+                    </ons-list-item>
+                </ons-list>
+            </div>
+        </ons-card>
+        <ons-card>
+            <div class="title">
+                From UR CT
+            </div>
+            <div class="content">
+                <ons-list>
+                    <ons-list-item>
+                        <div class="center">Today Active Blocks</div>
+                        <div class="right">25</div>
+                    </ons-list-item>
+                    <ons-list-item>
+                        <div class="center">Today Active Blocks By City</div>
+                        <div class="right">25</div>
+                    </ons-list-item>
+                    <ons-list-item>
+                        <div class="center">Today Active Blocks By City By Category In Your City</div>
+                        <div class="right">25</div>
+                    </ons-list-item>
+                    <ons-list-item>
+                        <div class="center">Today Unique Visitors</div>
+                        <div class="right">25</div>
+                    </ons-list-item>
+                    <ons-list-item>
+                        <div class="center">Today Unique Visitors From your city</div>
+                        <div class="right">25</div>
+                    </ons-list-item>
+                </ons-list>
+            </div>
+        </ons-card>
+    </ons-page>
+</ons-template>
+<script>
+    ///// KO-OnsenUI """bindings"""
+    document.addEventListener('init', function (event) {
+        var page = event.target;
+        if (page.data && page.data.viewModel) {
+            // Shortcut for ons-navigator
+            ko.applyBindings(page.data.viewModel, page);
+        } else {
+            // Everything else by ID
+
+            var viewModel = page.id.charAt(0).toUpperCase() + (page.id.split('-')[0] || '').slice(1) + 'ViewModel';
+            console.log("Current View Model " + page.id + " & " + viewModel);
+            if (window[viewModel]) {
+                ko.applyBindings(new window[viewModel](), event.target);
+            }
+        }
+    });
+    ///////////////////////////////
+
+    // Item model
+    function ListItem(content) {
+        var self = this;
+        self.content = content;
+    }
+    // Details page view model
+    function DetailsViewModel(item) {
+        var self = this;
+        self.item = item;
+    }
+    // List page view model
+    function ListViewModel() {
+        var self = this;
+
+        self.items = ko.observableArray([]);
+        //for (var i = 0; i < 6; i++) {
+        //    self.items.push(new ListItem("Item " + i));
+        //}
+
+        self.LoadCityBlocks = function () {
+
+        }
+
+        self.addItem = function () {
+            self.items.push(new ListItem('Item ' + self.items().length));
+        };
+
+        self.removeItem = function () {
+            self.items.remove(this);
+        };
+
+        self.detailsItem = function () {
+            document.querySelector('ons-navigator')
+                .pushPage('details.html', {
+                    data: { viewModel: new DetailsViewModel(this) }
+                });
+        };
+    }
+
+    // Settings page view model
+    function SettingsViewModel() {
+        var self = this;
+
+        self.info = 'More stuff';
+
+        self.LoadPoints = function () {
+            document.querySelector('ons-navigator')
+                .pushPage('points.html', {
+                    data: { viewModel: new Points() }
+                });
+        }
+
+        self.LoadReferrals = function () {
+            document.querySelector('ons-navigator')
+                .pushPage('referrals.html', {
+                    data: { viewModel: new Referral() }
+                });
+        }
+    }
+</script>

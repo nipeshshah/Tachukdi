@@ -1,0 +1,82 @@
+@{
+  ViewBag.Title = "Home Page";
+}
+
+<div id="dashboardpage">
+  <div data-bind="foreach: cityBlocks">
+    <div>
+      <h5>
+        <span data-bind="text: City"></span>
+        (<span data-bind="text: BlockCount"></span>)
+      </h5>
+    </div>
+  </div>
+</div>
+<hr />
+<div id="dashboardcategories">
+  <div data-bind="foreach: catBlocks">
+    <div>
+      <h5>
+        <span data-bind="text: Category"></span>
+        (<span data-bind="text: BlockCount"></span>)
+      </h5>
+    </div>
+  </div>
+</div>
+<hr />
+<div id="dashboardblocks">
+  <div data-bind="foreach: FullBlocks">
+    <div>
+      <h5>
+        <span data-bind="text: Content"></span>
+      </h5>
+      Call: <a href="tel:0"><span data-bind="text: MobileNo"></span></a>
+    </div>
+  </div>
+</div>
+<div id="pointsblocks">
+  <h4>Total Points : <span data-bind="text: TotalPoints"></span></h4>
+  <div data-bind="foreach: LastPointTransactions">
+    <div>
+      Date: <span data-bind="text: TransactionDate"></span>,
+      Description: <span data-bind="text: Description"></span>,
+      Points: <span data-bind="text: Points"></span>
+    </div>
+  </div>
+</div>
+<div id="referralblocks">
+  <h4>Referral Id : <span data-bind="text: ReferralId"></span></h4>
+  <div data-bind="foreach: ReferralTransactions">
+    <div>
+      Mobile: <span data-bind="text: Mobile"></span>,
+      DisplayName: <span data-bind="text: DisplayName"></span>,
+      JoinedOn: <span data-bind="text: JoinedOn"></span>
+    </div>
+  </div>
+</div>
+
+<div id="submitblock">
+  <b>City:</b>
+  <select data-bind="options: AllCities, optionsText: 'CityName', optionsValue: 'CityId', value: CityId"></select>
+  <b>Category:</b>
+  <select data-bind="options: AllCategories, optionsText:'CateName', optionsValue: 'CateId', value: CatId"></select>
+  <b>Content:</b>
+  <input type="text" data-bind="value: Content" />
+  <b>StartDate:</b>
+  <input type="date" data-bind="value: StartDate" />
+  <b>EndDate:</b>
+  <input type="date" data-bind="value: EndDate" />
+  Credits To Be Used : <div data-bind="text:BlockCost"></div>
+  <input type="button" value="Save" data-bind="click: SaveBlock" />
+</div>
+
+DB 1
+Total Cities
+Total Active Users
+Total Active Users In your city
+DB 2
+Today Active Blocks
+Today Active Blocks By City
+Today Active Blocks By City By Category In Your City
+Today Unique Visitors
+Today Unique Visitors From your city
