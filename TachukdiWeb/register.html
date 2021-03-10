@@ -1,0 +1,54 @@
+<link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+<link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+<script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+<script src="Scripts/jquery-3.3.1.min.js"></script>
+<script src="Scripts/knockout/knockout-latest.min.js"></script>
+<script src="Scripts/moment.js/moment.min.js"></script>
+<script src="Scripts/JSModals.js"></script>
+<script src="Scripts/MainScript.js"></script>
+
+<ons-page id="register-page">
+  <div style="text-align: center; margin: 50% 0;" data-bind="visible: !IsOTPSent()">
+    <p>
+      <ons-input type="tel" data-bind="value: Mobile" modifier="underbar"
+                 placeholder="Mobile" float></ons-input>
+    </p>
+    <p>
+      <ons-input data-bind="value: CityName" modifier="underbar"
+                 type="text" placeholder="City Name" float></ons-input>
+    </p>
+    <p>
+      <ons-input data-bind="value: Email" modifier="underbar"
+                 type="text" placeholder="Email" float></ons-input>
+    </p>
+    <p>
+      <ons-input data-bind="value: DisplayName" modifier="underbar"
+                 type="text" placeholder="Display Name" float></ons-input>
+    </p>
+    <p>
+      <ons-input data-bind="value: ReferralCode" modifier="underbar"
+                 type="text" placeholder="Referral Code" float></ons-input>
+    </p>
+    <p>
+      <ons-input data-bind="value: Password" modifier="underbar" 
+                 type="password" placeholder="Password" float></ons-input>
+    </p>
+    <p>
+      <ons-input data-bind="value: RepeatPassword" modifier="underbar"
+                 type="password" placeholder="Repeat Password" float></ons-input>
+    </p>
+    <p style="margin-top: 30px;">
+      <ons-button data-bind="click: Register">Sign Up</ons-button>
+      <ons-button onclick="window.location='login.html'">Sign In</ons-button>
+    </p>
+  </div>
+  <div style="text-align: center; margin: 50% 0;" data-bind="visible: IsOTPSent()">
+    <p>
+      <ons-input type="text" max-length="6" data-bind="value: otp" modifier="underbar"
+                 placeholder="OTP" float></ons-input>
+    </p>
+    <p style="margin-top: 30px;">
+      <ons-button data-bind="click: ConfirmOTP">Confirm</ons-button>
+    </p>
+  </div>
+</ons-page>

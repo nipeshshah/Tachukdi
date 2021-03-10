@@ -69,12 +69,17 @@
   <ItemGroup>
     <Content Include="dashboard.html" />
     <Content Include="index.html" />
+    <Content Include="login.html" />
+    <Content Include="register.html" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\JSModals.js" />
     <Content Include="Scripts\knockout\knockout-latest.min.js" />
     <Content Include="Scripts\MainScript.js" />
     <Content Include="Scripts\moment.js\moment.min.js" />
+    <Content Include="Scripts\onsen-css-components.css" />
+    <Content Include="Scripts\onsen-css-components.min.css" />
+    <Content Include="Scripts\theme.css" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
@@ -84,6 +89,7 @@
   <ItemGroup>
     <Content Include="libman.json" />
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

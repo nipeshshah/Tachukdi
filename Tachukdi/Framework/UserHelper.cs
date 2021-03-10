@@ -58,9 +58,9 @@ namespace Tachukdi.Framework
             return IsUserExists;
         }
 
-        internal bool ActivateUser(string mobileno)
+        internal bool ActivateUser(string mobileno, string password)
         {
-            bool IsUserActivated = _db.ActivateUser(mobileno);
+            bool IsUserActivated = _db.ActivateUser(mobileno, password);
             return IsUserActivated;
         }
 

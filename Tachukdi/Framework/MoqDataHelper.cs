@@ -142,8 +142,10 @@ namespace Tachukdi.Framework
     internal List<PointTransactionModal> GetTopNPointTransaction(string mobileno, int topCount)
     {
       UserModal user = GetUserByMobileNo(mobileno);
-      List<TblPoint> points = _db.TblPoints.Take(topCount).OrderByDescending(t => t.TransactionDate).Where(t => t.UserId ==
-      _db.TblUsers.Where(x => x.MobileNo == mobileno).FirstOrDefault().Id).ToList();
+      List<TblPoint> points = _db.TblPoints.OrderByDescending(t => t.TransactionDate)
+        .Where(t => t.UserId == _db.TblUsers.Where(x => x.MobileNo == mobileno).FirstOrDefault().Id)
+        .Take(topCount)
+        .ToList();
 
       List<PointTransactionModal> pointTransactions = points.Select(t => new PointTransactionModal()
       {
@@ -248,13 +250,14 @@ namespace Tachukdi.Framework
       }
     }
 
-    internal bool ActivateUser(string mobileno)
+    internal bool ActivateUser(string mobileno, string password)
     {
       TblUser tblUser = _db.TblUsers.Where(t => t.MobileNo == mobileno).FirstOrDefault();
       if(tblUser != null)
       {
         tblUser.Status = "Active";
         tblUser.OTP = "";
+        tblUser.Password = password;
         _db.SaveChanges();
         return true;
       }
@@ -272,7 +275,9 @@ namespace Tachukdi.Framework
         UserModal userModal = new UserModal();
         userModal.mobileno = tblUser.MobileNo;
         userModal.ReferredByMobile = tblUser.ReferredByMobile;
-
+        userModal.DisplayName = tblUser.Name;
+        userModal.Email = tblUser.Email;
+        
         return userModal;
       }
       else

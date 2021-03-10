@@ -109,22 +109,43 @@ var services =
 
 //Page Functions
 
+//document.addEventListener('event.tabItem', function (event) {
+//  console.log(event.target.id);
+//});
+
 ///// KO-OnsenUI """bindings"""
 document.addEventListener('init', function (event) {
   var page = event.target;
+  console.log(event.target.id);
+  //if (event.target.id === '') {
+  //  $('#pageTitle').html('Offers - <small>' + moment().format('MMM DD, YYYY') + '</small>');
+  //}
+  //if (event.target.id === 'citycateblock-page') {
+  //  $('#citycateblock_title').text('Surat');
+  //}
+  //if (event.target.id === 'dashboardblock-page') {
+  //  $('#dashboardblock_title').text('Surat > Jobs');
+  //} 
   if (page.data && page.data.viewModel) {
     // Shortcut for ons-navigator
     ko.applyBindings(page.data.viewModel, page);
-  } else {
+  }
+  else {
     // Everything else by ID
 
     var viewModel = page.id.charAt(0).toUpperCase() + (page.id.split('-')[0] || '').slice(1) + 'ViewModel';
-    console.log("Current View Model " + page.id + " & " + viewModel);
+    //console.log("Current View Model " + page.id + " & " + viewModel);
     if (window[viewModel]) {
       ko.applyBindings(new window[viewModel](), event.target);
     }
   }
 });
+
+function pageChange(pagename) {
+  //if (pagename == 'cityblock') {
+  //  $('#pageTitle').html('Offers - <small>' + moment().format('MMM DD, YYYY') + '</small>');
+  //}
+}
 
 // Settings page view model
 function SettingsViewModel() {
@@ -150,6 +171,9 @@ function SettingsViewModel() {
 function CityblockViewModel() {
   var self = this;
   self.cityBlocks = ko.observableArray([]);
+  self.DashboardCityTitle = ko.observable('');
+  $('#pageTitle').html('Offers - <small>' + moment().format('MMM DD, YYYY') + '</small>');
+//self.CityTitle = ko.observable('Advertise in ');
   self.LoadDashboard = function () {
     services.getServiceWithOutToken(apiurls.Block.City, function (response) {
       response.forEach(function (item, index) {
@@ -160,21 +184,22 @@ function CityblockViewModel() {
         self.cityBlocks.push(m1);
       });
     });
-  }
+  };
 
   self.detailsItem = function () {
     document.querySelector('ons-navigator')
       .pushPage('Citycateblock.html', {
-        data: { viewModel: new CitycateblockViewModel(this.CityId()) }
+        data: { viewModel: new CitycateblockViewModel(this.CityId(), this.City()) }
       });
   };
 
   self.LoadDashboard();
 }
 
-function CitycateblockViewModel(CityId) {
+function CitycateblockViewModel(CityId, CityName) {
   var self = this;
   self.catBlocks = ko.observableArray([]);
+  self.CityName = ko.observable(CityName);
   self.LoadDashboard = function () {
     services.getServiceWithOutToken(apiurls.Block.Cats + "/" + CityId, function (response) {
       response.forEach(function (item, index) {
@@ -191,20 +216,21 @@ function CitycateblockViewModel(CityId) {
   self.detailsItem = function () {
     document.querySelector('ons-navigator')
       .pushPage('Dashboardblock.html', {
-        data: { viewModel: new DashboardBlock(this.CityId(), this.CatId()) }
+        data: { viewModel: new DashboardBlock(this.CityId(), this.CatId(), self.CityName() + " - "+ this.Category()) }
       });
   };
 
   self.LoadDashboard();
+  return self;
 }
 
-function DashboardBlock(CityId, CatId) {
+function DashboardBlock(CityId, CatId, Title) {
   var self = this;
   self.FullBlocks = ko.observableArray([]);
+  self.CityCategoryName = ko.observable(Title);
   self.LoadDashboard = function () {
     services.getServiceWithOutToken(apiurls.Block.Blocks + "/" + CityId + "/cat/" + CatId, function (response) {
       response.forEach(function (item, index) {
-
         var m1 = new BlockModal();
         m1.Content(item.Content);
         m1.MobileNo(item.MobileNo);
@@ -224,6 +250,7 @@ function LoginViewModel() {
   self.Login = function () {
     services.postServiceWithToken(apiurls.User.Login + '?mobileno=' + self.UserName() + '&password=' + self.Password(), null, function (response) {
       debugger;
+      SetStoredToken(response.token, response.mobileno);
       ons.notification.toast('Login Called!', {
         timeout: 2000
       });
@@ -232,6 +259,53 @@ function LoginViewModel() {
   self.Register = function () {
     ons.notification.toast('Register Called!', {
       timeout: 2000
+    });
+  };
+}
+
+function RegisterViewModel() {
+  var self = this;
+  self.Mobile = ko.observable('SOME CONTENT');
+  self.CityName = ko.observable('asd');
+  self.Email = ko.observable('nipesh@123.com');
+  self.DisplayName = ko.observable('asd');
+  self.ReferralCode = ko.observable('asd');
+  self.otp = ko.observable('1234');
+  self.IsOTPSent = ko.observable(false);
+  self.Password = ko.observable('admin@123');
+  self.RepeatPassword = ko.observable('admin@123');
+  self.Register = function () {
+
+    if (self.Password() != self.RepeatPassword())
+    {
+      ons.notification.toast('Password Mismatch!', {
+        timeout: 2000
+      });
+    }
+    var data = {
+      mobileno: self.Mobile(),
+      city: self.CityName(),
+      email: self.Email(),
+      displayname: self.DisplayName(),
+      referredbyCode: self.ReferralCode()
+    };
+
+    services.postServiceWithToken(apiurls.User.Join, JSON.stringify(data), function (response) {
+      ons.notification.toast('OTP Sent!', {
+        timeout: 2000
+      });
+      self.IsOTPSent(true);
+    });
+  };
+  self.ConfirmOTP = function () {
+    var dataUrl = `?mobileno=${self.Mobile()}&otp=${self.otp()}&password=${self.Password()}`;
+
+    services.postServiceWithToken(apiurls.User.ConfirmOPT + dataUrl, null, function (response) {
+      ons.notification.toast('Registered Successfully!', {
+        timeout: 2000
+      });
+      self.IsOTPSent(true);
+      location.href = '/login.html';
     });
   };
 }
@@ -307,7 +381,6 @@ function SubmitblockViewModel() {
     self.BlockCost(moment(newDate).diff(moment(self.StartDate()), 'days') + 1);
   }, self);
   self.SaveBlock = function () {
-    debugger;
     var data = {};
     data['CatId'] = self.CatId();
     data['CityId'] = self.CityId();
@@ -344,4 +417,16 @@ function SubmitblockViewModel() {
   };
   self.LoadCategories();
   self.LoadCities();
+}
+
+function GetStoredToken() {
+  return localStorage["tachukdi_token"].toString();
+}
+function GetStoredMobile() {
+  return localStorage["tachukdi_mobile"].toString();
+}
+
+function SetStoredToken(token, mobile) {
+  localStorage["tachukdi_token"] = token;
+  localStorage["tachukdi_mobile"] = mobile;
 }

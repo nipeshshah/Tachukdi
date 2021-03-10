@@ -9,6 +9,8 @@
   <script src="Scripts/moment.js/moment.min.js"></script>
   <script src="Scripts/JSModals.js"></script>
   <script src="Scripts/MainScript.js"></script>
+  <link href="Scripts/onsen-css-components.css" rel="stylesheet" />
+  <!--<link href="Scripts/theme.css" rel="stylesheet" />-->
 </head>
 <body>
   <ons-navigator page="tabbar.html"></ons-navigator>
@@ -16,14 +18,19 @@
   <ons-template id="tabbar.html">
     <ons-page id="tabbar-page">
       <ons-toolbar>
-        <div class="center">BLK 04/03/2021</div>
+        <div class="center" id="pageTitle">BLK 04/03/2021</div>
       </ons-toolbar>
       <ons-tabbar>
-        <ons-tab page="cityblock.html" icon="ion-md-home" label="List"></ons-tab>
-        <ons-tab page="settings.html" icon="ion-md-person" label="Dashboard"></ons-tab>
-        <ons-tab page="dashboard.html" icon="ion-md-person" label="Dashboard"></ons-tab>
-        <ons-tab page="submitblock.html" icon="ion-md-person" label="+" active></ons-tab>
-        <ons-tab page="login.html" icon="ion-md-person" label="Settings"></ons-tab>
+        <ons-tab page="cityblock.html" onclick="pageChange('cityblock')"
+                 icon="ion-md-home" active></ons-tab>
+        <ons-tab page="settings.html" onclick="pageChange('settings')"
+                 icon="ion-md-person" label="Settings"></ons-tab>
+        <!--<ons-tab page="login.html" onclick="pageChange('login')"
+                 icon="ion-md-person" label="Login"></ons-tab>
+        <ons-tab page="register.html" onclick="pageChange('join')"
+                 icon="ion-md-person" label="Join"></ons-tab>-->
+        <ons-tab page="submitblock.html" icon="ion-md-person" label="+"></ons-tab>
+        <ons-tab page="submitblock.html" icon="ion-md-person" label="+"></ons-tab>
       </ons-tabbar>
     </ons-page>
   </ons-template>
@@ -36,18 +43,8 @@
             <span class="list-item__title" data-bind="text: City"></span>
             <span data-bind="text: 'Available Block: ' + BlockCount()" class="list-item__subtitle"></span>
           </div>
-          <!--@*<div class="center" data-bind="text: City, click: $parent.detailsItem"></div>
-          <div class="right" data-bind="click: $parent.detailsItem">
-            <ons-icon icon="ion-ios-trash-outline, material:md-next"></ons-icon>
-          </div>*@-->
         </ons-list-item>
       </ons-list>
-      <!--@*<ons-if platform="android">
-        <ons-fab position="bottom right" data-bind="click: addItem">+</ons-fab>
-      </ons-if>
-      <ons-if platform="ios other">
-        <p><ons-button modifier="large--quiet" data-bind="click: addItem">Add new item</ons-button></p>
-      </ons-if>*@-->
     </ons-page>
   </ons-template>
 
@@ -55,7 +52,7 @@
     <ons-page id="citycateblock-page">
       <ons-toolbar>
         <div class="left"><ons-back-button>Page 1</ons-back-button></div>
-        <div class="center">AHM 04/03/2021</div>
+        <div class="center" data-bind="text:CityName">AKJSLSA</div>
       </ons-toolbar>
       <ons-list data-bind="foreach: catBlocks">
         <ons-list-item modifier="chevron" tappable>
@@ -72,7 +69,7 @@
     <ons-page id="dashboardblock-page">
       <ons-toolbar>
         <div class="left"><ons-back-button>Page 1</ons-back-button></div>
-        <div class="center">AHM/CT1</div>
+        <div class="center" data-bind="text:CityCategoryName"></div>
       </ons-toolbar>
       <ons-list data-bind="foreach: FullBlocks">
         <ons-list-item modifier="longdivider">
@@ -132,26 +129,6 @@
     </ons-page>
   </ons-template>
 
-  <ons-template id="login.html">
-    <ons-page id="login-page">
-      <ons-toolbar>
-        <div class="center" data-bind="text: Title">AHM/CT1</div>
-      </ons-toolbar>
-      <div style="text-align: center; margin: 50% 0;">
-        <p>
-          <ons-input id="username" data-bind="value: UserName" modifier="underbar" placeholder="Username" float></ons-input>
-        </p>
-        <p>
-          <ons-input id="password" data-bind="value: Password" modifier="underbar" type="password" placeholder="Password" float></ons-input>
-        </p>
-        <p style="margin-top: 30px;">
-          <ons-button data-bind="click: Login">Sign In</ons-button>
-          <ons-button data-bind="click: Register">Sign Up</ons-button>
-        </p>
-      </div>
-    </ons-page>
-  </ons-template>
-
   <ons-template id="points.html">
     <ons-page id="points-page">
       <ons-toolbar>
@@ -191,7 +168,7 @@
   <ons-template id="referrals.html">
     <ons-page id="referrals-page">
       <ons-toolbar>
-        <div class="center">Points</div>
+        <div class="center">Referrals</div>
       </ons-toolbar>
 
       <div class="card">
@@ -296,7 +273,7 @@
               Advertise Charges:
             </div>
             <div class="right">
-              <span style="font-size:large" data-bind="text: BlockCost"></span><hr/><small>Credit(s)</small>
+              <span style="font-size:large" data-bind="text: BlockCost"></span><hr /><small>Credit(s)</small>
             </div>
           </ons-list-item>
           <div class="content">
@@ -338,7 +315,7 @@
               <ons-button data-bind="click: SaveBlock">Register Advertise</ons-button>
             </p>
           </div>
-</ons-card>
+      </ons-card>
     </ons-page>
   </ons-template>
 </body>
