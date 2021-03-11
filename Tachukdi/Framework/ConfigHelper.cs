@@ -13,7 +13,12 @@ namespace Tachukdi.Framework
             return _db.GetAllCities();
         }
 
-        internal List<CategoryModal> GetAllCategories()
+    internal CityModal GetCityByCityName(string cityname)
+    {
+      return _db.GetCityByCityName(cityname);
+    }
+
+    internal List<CategoryModal> GetAllCategories()
         {
             return _db.GetAllCategories();
         }

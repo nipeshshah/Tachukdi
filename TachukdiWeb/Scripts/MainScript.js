@@ -3,7 +3,7 @@ var apiurls = {
   AuthToken: "api/auth",
   Block: {
     City: "api/blocks/city",
-    Cats: "api/blocks/city/",
+    Cats: "api/blocks/city",
     Blocks: "api/blocks/city/",//{cityid}/cat/{catid}",
     AddBlock: "api/blocks/submit"
   },
@@ -40,10 +40,11 @@ var services =
         if (err.status == 401) {
           window.location.href = '/auth';
         }
-        if (errorCallBack == undefined && toastr != undefined)
-          toastr.error(err.responseJSON.message);
-        else if (errorCallBack == undefined && toastr == undefined)
-          alert(err.responseJSON.message);
+        if (errorCallBack == undefined) {
+          ons.notification.toast(err.responseJSON.message, {
+            timeout: 2000
+          });
+        }
         else
           errorCallBack(err);
       },
@@ -65,10 +66,11 @@ var services =
         if (err.status == 401) {
           window.location.href = '/auth';
         }
-        if (errorCallBack == undefined && toastr != undefined)
-          toastr.error(err.responseJSON.message);
-        else if (errorCallBack == undefined && toastr == undefined)
-          alert(err.responseJSON.message);
+        if (errorCallBack == undefined) {
+          ons.notification.toast(err.responseJSON.message, {
+            timeout: 2000
+          });
+        }
         else
           errorCallBack(err);
       },
@@ -93,10 +95,11 @@ var services =
       },
       "data": formData,
       error: function (err) {
-        if (errorCallBack == undefined && toastr != undefined)
-          toastr.error(err.responseJSON.message);
-        else if (errorCallBack == undefined && toastr == undefined)
-          alert(err.responseJSON.message);
+        if (errorCallBack == undefined) {
+          ons.notification.toast(err.responseJSON.message, {
+            timeout: 2000
+          });
+        }
         else
           errorCallBack(err);
       },
@@ -201,7 +204,17 @@ function CitycateblockViewModel(CityId, CityName) {
   self.catBlocks = ko.observableArray([]);
   self.CityName = ko.observable(CityName);
   self.LoadDashboard = function () {
-    services.getServiceWithOutToken(apiurls.Block.Cats + "/" + CityId, function (response) {
+    var urpart = '';
+    if (CityId !== undefined)
+      urpart = "/" + CityId;
+    else {
+      var storedCityName = GetStoredCity();
+      if(storedCityName != undefined)
+        urpart = "/name/" + storedCityName;
+      //else
+        //window.location = 
+    }
+    services.getServiceWithOutToken(apiurls.Block.Cats + "/" + urpart, function (response) {
       response.forEach(function (item, index) {
         var m1 = new BlockCategoryModal();
         m1.CityId(item.CityId);
@@ -219,6 +232,8 @@ function CitycateblockViewModel(CityId, CityName) {
         data: { viewModel: new DashboardBlock(this.CityId(), this.CatId(), self.CityName() + " - "+ this.Category()) }
       });
   };
+
+  if(CityName == undefined)
 
   self.LoadDashboard();
   return self;
@@ -250,10 +265,11 @@ function LoginViewModel() {
   self.Login = function () {
     services.postServiceWithToken(apiurls.User.Login + '?mobileno=' + self.UserName() + '&password=' + self.Password(), null, function (response) {
       debugger;
-      SetStoredToken(response.token, response.mobileno);
+      SetStoredToken(response.token, response.mobileno, response.city);
       ons.notification.toast('Login Called!', {
         timeout: 2000
       });
+      window.location = 'index.html'
     });
   };
   self.Register = function () {
@@ -425,8 +441,11 @@ function GetStoredToken() {
 function GetStoredMobile() {
   return localStorage["tachukdi_mobile"].toString();
 }
-
-function SetStoredToken(token, mobile) {
+function GetStoredCity() {
+  return localStorage["tachukdi_city"].toString();
+}
+function SetStoredToken(token, mobile, city) {
   localStorage["tachukdi_token"] = token;
   localStorage["tachukdi_mobile"] = mobile;
+  localStorage["tachukdi_city"] = city;
 }

@@ -24,5 +24,6 @@ namespace Tachukdi.Models.DBM
         public string ReferralCode { get; set; }
         public string ReferredByMobile { get; set; }
         public Nullable<System.DateTime> JoiningDate { get; set; }
+        public string City { get; set; }
     }
 }

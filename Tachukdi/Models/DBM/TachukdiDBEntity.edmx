@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="tachukdiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="tachukdiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="TblBlocks">
           <Key>
             <PropertyRef Name="Id" />
@@ -60,6 +60,7 @@
           <Property Name="ReferralCode" Type="nvarchar" MaxLength="10" />
           <Property Name="ReferredByMobile" Type="nvarchar" MaxLength="10" />
           <Property Name="JoiningDate" Type="datetime" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityContainer Name="tachukdiModelStoreContainer">
           <EntitySet Name="TblBlocks" EntityType="Self.TblBlocks" Schema="dbo" store:Type="Tables" />
@@ -68,8 +69,7 @@
           <EntitySet Name="TblPoints" EntityType="Self.TblPoints" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblUser" EntityType="Self.TblUser" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="tachukdiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -128,6 +128,7 @@
           <Property Name="ReferralCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="ReferredByMobile" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="JoiningDate" Type="DateTime" Precision="3" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="tachukdiEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="TblBlocks" EntityType="Self.TblBlock" />
@@ -190,6 +191,7 @@
           <EntitySetMapping Name="TblUsers">
             <EntityTypeMapping TypeName="tachukdiModel.TblUser">
               <MappingFragment StoreEntitySet="TblUser">
+                <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />

@@ -2,7 +2,7 @@
 <html>
 <head>
   <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
-  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+  <link href="Scripts/onsen-css-components.css" rel="stylesheet" />
   <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
   <script src="Scripts/jquery-3.3.1.min.js"></script>
   <script src="Scripts/knockout/knockout-latest.min.js"></script>
@@ -11,6 +11,18 @@
   <script src="Scripts/MainScript.js"></script>
   <link href="Scripts/onsen-css-components.css" rel="stylesheet" />
   <!--<link href="Scripts/theme.css" rel="stylesheet" />-->
+  <style>
+    ons-input, ons-radio, ons-checkbox, ons-search-input {
+      display: block;
+      position: relative;
+      width: auto;
+      padding: 10px;
+    }
+
+    ons-range, ons-select {
+      display: block;
+    }
+  </style>
 </head>
 <body>
   <ons-navigator page="tabbar.html"></ons-navigator>
@@ -21,7 +33,7 @@
         <div class="center" id="pageTitle">BLK 04/03/2021</div>
       </ons-toolbar>
       <ons-tabbar>
-        <ons-tab page="cityblock.html" onclick="pageChange('cityblock')"
+        <ons-tab page="Citycateblock.html"
                  icon="ion-md-home" active></ons-tab>
         <ons-tab page="settings.html" onclick="pageChange('settings')"
                  icon="ion-md-person" label="Settings"></ons-tab>
@@ -29,7 +41,7 @@
                  icon="ion-md-person" label="Login"></ons-tab>
         <ons-tab page="register.html" onclick="pageChange('join')"
                  icon="ion-md-person" label="Join"></ons-tab>-->
-        <ons-tab page="submitblock.html" icon="ion-md-person" label="+"></ons-tab>
+        <ons-tab page="submitblock.html" active icon="ion-md-person" label="+"></ons-tab>
         <ons-tab page="submitblock.html" icon="ion-md-person" label="+"></ons-tab>
       </ons-tabbar>
     </ons-page>
@@ -258,7 +270,7 @@
       </ons-card>
     </ons-page>
   </ons-template>
-
+  
   <ons-template id="submitblock.html">
     <ons-page id="submitblock-page">
       <!--public int CatId { get; set; }
@@ -273,7 +285,7 @@
               Advertise Charges:
             </div>
             <div class="right">
-              <span style="font-size:large" data-bind="text: BlockCost"></span><hr /><small>Credit(s)</small>
+              <span style="font-size:large" data-bind="text: BlockCost"></span>&nbsp;&nbsp;&nbsp;<small>Credit(s)</small>
             </div>
           </ons-list-item>
           <div class="content">
@@ -312,7 +324,7 @@
                          placeholder="Content" float></ons-input>
             </p>
             <p>
-              <ons-button data-bind="click: SaveBlock">Register Advertise</ons-button>
+              <ons-button modifier="large" data-bind="click: SaveBlock">Register Advertise</ons-button>
             </p>
           </div>
       </ons-card>

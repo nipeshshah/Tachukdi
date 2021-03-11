@@ -1,12 +1,23 @@
 <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
-<link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+<link href="Scripts/onsen-css-components.css" rel="stylesheet" />
 <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
 <script src="Scripts/jquery-3.3.1.min.js"></script>
 <script src="Scripts/knockout/knockout-latest.min.js"></script>
 <script src="Scripts/moment.js/moment.min.js"></script>
 <script src="Scripts/JSModals.js"></script>
 <script src="Scripts/MainScript.js"></script>
+<style>
+  ons-input, ons-radio, ons-checkbox, ons-search-input {
+    display: block;
+    position: relative;
+    width: auto;
+    padding: 10px;
+  }
 
+  ons-range, ons-select {
+    display: block;
+  }
+</style>
 <ons-page id="login-page">
   <div style="text-align: center; margin: 50% 0;">
     <p>

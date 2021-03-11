@@ -3,6 +3,7 @@ using Tachukdi.Models;
 
 namespace Tachukdi.Controllers
 {
+  [AllowAnonymous]
   public class UserController : BaseController
   {
     //[Route("api/user/getname")]
@@ -24,6 +25,7 @@ namespace Tachukdi.Controllers
     //    }
     //}
 
+      [AllowAnonymous]
     [Route("api/user/join")]
     public IHttpActionResult Register(RegisterRequestModal registerUser)
     {
@@ -40,6 +42,7 @@ namespace Tachukdi.Controllers
     }
 
     [Route("api/user/otpconfirm")]
+    [AllowAnonymous]
     public IHttpActionResult VerifyOTP(string mobileno, string otp, string password)
     {
       //if User exists and is InActiveUserWithCode
@@ -62,6 +65,7 @@ namespace Tachukdi.Controllers
     }
 
     [Route("api/user/login")]
+    [AllowAnonymous]
     public IHttpActionResult Login(string mobileno, string password)
     {
       //if user exists and is active
@@ -76,6 +80,7 @@ namespace Tachukdi.Controllers
           return Ok(new {
             userid = user.id,
             mobileno = user.mobileno,
+            city = user.City,
             token = controller.GetToken(user)
           });
         }

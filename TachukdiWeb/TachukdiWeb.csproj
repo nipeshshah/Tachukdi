@@ -79,7 +79,10 @@
     <Content Include="Scripts\moment.js\moment.min.js" />
     <Content Include="Scripts\onsen-css-components.css" />
     <Content Include="Scripts\onsen-css-components.min.css" />
+    <Content Include="Scripts\tagcloud\tagCloud.css" />
+    <Content Include="Scripts\tagcloud\tagsCloud.js" />
     <Content Include="Scripts\theme.css" />
+    <Content Include="splash.html" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>

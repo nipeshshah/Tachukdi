@@ -10,6 +10,7 @@ namespace Tachukdi.Models
     public string Email { get; set; }
     public string ReferralCode { get; set; }
     public string DisplayName { get; set; }
+    public string City { get; set; }
   }
 
   public class PointTransactionModal

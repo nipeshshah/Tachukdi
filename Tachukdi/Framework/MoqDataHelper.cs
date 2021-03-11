@@ -277,7 +277,7 @@ namespace Tachukdi.Framework
         userModal.ReferredByMobile = tblUser.ReferredByMobile;
         userModal.DisplayName = tblUser.Name;
         userModal.Email = tblUser.Email;
-        
+        userModal.City = tblUser.City;
         return userModal;
       }
       else
@@ -297,5 +297,18 @@ namespace Tachukdi.Framework
       }).ToList();
       return cityModals;
     }
+
+    internal CityModal GetCityByCityName(string cityname)
+    {
+      TblCity tblCity = _db.TblCities.Where(t => t.CityName == cityname).FirstOrDefault();
+      CityModal cityModal = new CityModal()
+      {
+        CityId = tblCity.Id,
+        CityName = tblCity.CityName,
+        State = tblCity.StateName
+      };
+      return cityModal;
+    }
+    
   }
 }
