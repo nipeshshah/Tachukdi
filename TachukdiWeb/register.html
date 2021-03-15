@@ -1,14 +1,29 @@
 <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
-<link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+<link href="Scripts/onsen-css-components.css" rel="stylesheet" />
 <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
 <script src="Scripts/jquery-3.3.1.min.js"></script>
 <script src="Scripts/knockout/knockout-latest.min.js"></script>
 <script src="Scripts/moment.js/moment.min.js"></script>
 <script src="Scripts/JSModals.js"></script>
 <script src="Scripts/MainScript.js"></script>
+<style>
+  ons-input, ons-radio, ons-checkbox, ons-search-input {
+    display: block;
+    position: relative;
+    width: auto;
+    padding: 10px;
+  }
 
+  ons-range, ons-select {
+    display: block;
+  }
+</style>
 <ons-page id="register-page">
-  <div style="text-align: center; margin: 50% 0;" data-bind="visible: !IsOTPSent()">
+  <div style="text-align: center; margin: 10%;" data-bind="visible: !IsOTPSent()">
+    <h1>
+      Join AAJ ki Offer
+    </h1>
+    <br />
     <p>
       <ons-input type="tel" data-bind="value: Mobile" modifier="underbar"
                  placeholder="Mobile" float></ons-input>
@@ -30,7 +45,7 @@
                  type="text" placeholder="Referral Code" float></ons-input>
     </p>
     <p>
-      <ons-input data-bind="value: Password" modifier="underbar" 
+      <ons-input data-bind="value: Password" modifier="underbar"
                  type="password" placeholder="Password" float></ons-input>
     </p>
     <p>
@@ -38,17 +53,21 @@
                  type="password" placeholder="Repeat Password" float></ons-input>
     </p>
     <p style="margin-top: 30px;">
-      <ons-button data-bind="click: Register">Sign Up</ons-button>
-      <ons-button onclick="window.location='login.html'">Sign In</ons-button>
+      <!--<ons-button data-bind="click: Register">Sign Up</ons-button>
+  <ons-button onclick="window.location='login.html'">Sign In</ons-button>-->
+      <ons-button modifier="large" data-bind="click: Register">Sign Up</ons-button><br /><br />
+      <ons-button modifier="large" onclick="window.location='login.html'">Sign In</ons-button>
+
     </p>
   </div>
-  <div style="text-align: center; margin: 50% 0;" data-bind="visible: IsOTPSent()">
+  <div style="text-align: center; margin: 50% 10%;" data-bind="visible: IsOTPSent()">
     <p>
       <ons-input type="text" max-length="6" data-bind="value: otp" modifier="underbar"
                  placeholder="OTP" float></ons-input>
     </p>
     <p style="margin-top: 30px;">
-      <ons-button data-bind="click: ConfirmOTP">Confirm</ons-button>
+      <ons-button modifier="large" data-bind="click: ConfirmOTP">Confirm</ons-button><br /><br />
+      <ons-button modifier="large" onclick="location.href='register.html'">Sign Up</ons-button>
     </p>
   </div>
 </ons-page>

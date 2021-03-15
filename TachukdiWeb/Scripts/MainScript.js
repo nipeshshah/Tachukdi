@@ -37,9 +37,9 @@ var services =
       "method": "GET",
       "timeout": 0,
       error: function (err) {
-        if (err.status == 401) {
-          window.location.href = '/auth';
-        }
+        //if (err.status == 401) {
+        //  window.location.href = '/auth';
+        //}
         if (errorCallBack == undefined) {
           ons.notification.toast(err.responseJSON.message, {
             timeout: 2000
@@ -63,9 +63,9 @@ var services =
       },
       "timeout": 0,
       error: function (err) {
-        if (err.status == 401) {
-          window.location.href = '/auth';
-        }
+        //if (err.status == 401) {
+        //  window.location.href = '/auth';
+        //}
         if (errorCallBack == undefined) {
           ons.notification.toast(err.responseJSON.message, {
             timeout: 2000
@@ -120,6 +120,14 @@ var services =
 document.addEventListener('init', function (event) {
   var page = event.target;
   console.log(event.target.id);
+  if (GetStoredToken() == "") {
+    $('.onlylogoff').show();
+    $('.onlylogin').hide();
+  }
+  else {
+    $('.onlylogoff').hide();
+    $('.onlylogin').show();
+  }
   //if (event.target.id === '') {
   //  $('#pageTitle').html('Offers - <small>' + moment().format('MMM DD, YYYY') + '</small>');
   //}
@@ -135,11 +143,14 @@ document.addEventListener('init', function (event) {
   }
   else {
     // Everything else by ID
-
+    debugger;
     var viewModel = page.id.charAt(0).toUpperCase() + (page.id.split('-')[0] || '').slice(1) + 'ViewModel';
     //console.log("Current View Model " + page.id + " & " + viewModel);
     if (window[viewModel]) {
       ko.applyBindings(new window[viewModel](), event.target);
+    }
+    if (viewModel == "QloginViewModel") {
+      ko.applyBindings(new LoginViewModel(), event.target);
     }
   }
 });
@@ -169,6 +180,18 @@ function SettingsViewModel() {
         data: { viewModel: new Referral() }
       });
   };
+
+  self.LogOff = function () {
+    SetStoredToken("", "", "");
+  };
+
+  self.SubmitAdd = function () {
+    debugger;
+    document.querySelector('ons-navigator')
+      .pushPage('submitblock.html', {
+        data: { viewModel: new SubmitblockViewModel() }
+      });
+  }
 }
 
 function CityblockViewModel() {
@@ -233,12 +256,67 @@ function CitycateblockViewModel(CityId, CityName) {
       });
   };
 
-  if(CityName == undefined)
+  //navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
   self.LoadDashboard();
   return self;
 }
+//function onSuccess(position) {
+//  debugger;
+//  var lat = position.coords.latitude;
+//  var lng = position.coords.longitude;
+//  codeLatLng(lat, lng);
+//  //var element = document.getElementById('geolocation');
+//  //element.innerHTML = 'Latitude: ' + position.coords.latitude + '<br />' +
+//  //  'Longitude: ' + position.coords.longitude + '<br />' +
+//  //  'Altitude: ' + position.coords.altitude + '<br />' +
+//  //  'Accuracy: ' + position.coords.accuracy + '<br />' +
+//  //  'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '<br />' +
+//  //  'Heading: ' + position.coords.heading + '<br />' +
+//  //  'Speed: ' + position.coords.speed + '<br />' +
+//  //  'Timestamp: ' + new Date(position.timestamp) + '<br />';
+//}
+//var geocoder;
+//function codeLatLng(lat, lng) {
+//  debugger;
+//  geocoder = new google.maps.Geocoder();
+//  var latlng = new google.maps.LatLng(lat, lng);
+//  geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+//    debugger;
+//    if (status == google.maps.GeocoderStatus.OK) {
+//      console.log(results)
+//      if (results[1]) {
+//        //formatted address
+//        alert(results[0].formatted_address)
+//        //find country name
+//        for (var i = 0; i < results[0].address_components.length; i++) {
+//          for (var b = 0; b < results[0].address_components[i].types.length; b++) {
 
+//            //there are different types that might hold a city admin_area_lvl_1 usually does in come cases looking for sublocality type will be more appropriate
+//            if (results[0].address_components[i].types[b] == "administrative_area_level_1") {
+//              //this is the object you are looking for
+//              city = results[0].address_components[i];
+//              break;
+//            }
+//          }
+//        }
+//        //city data
+//        alert(city.short_name + " " + city.long_name)
+
+
+//      } else {
+//        alert("No results found");
+//      }
+//    } else {
+//      alert("Geocoder failed due to: " + status);
+//    }
+//  });
+//}
+
+//function onError(error) {
+//  alert('code: ' + error.code + '\n' +
+//    'message: ' + error.message + '\n');
+//}
 function DashboardBlock(CityId, CatId, Title) {
   var self = this;
   self.FullBlocks = ko.observableArray([]);
@@ -248,20 +326,36 @@ function DashboardBlock(CityId, CatId, Title) {
       response.forEach(function (item, index) {
         var m1 = new BlockModal();
         m1.Content(item.Content);
+        if (GetStoredToken() != undefined)
+          m1.IsLogin(true);
+        else
+          m1.IsLogin(false);
         m1.MobileNo(item.MobileNo);
+
         m1.CreatedDate(item.CreatedDate);
         self.FullBlocks.push(m1);
       });
     });
-  }
+  };
+  self.openLoginForm = function () {
+    //window.Location = 'login.html';
+    document.querySelector('ons-navigator')
+      .pushPage('qlogin.html', {
+        data: { viewModel: new LoginViewModel() }
+      });
+    //ons.createElement('login.html', { append: true })
+    //  .then(function (dialog) {
+    //    dialog.show();
+    //  });
+  };
   self.LoadDashboard();
 }
 
 function LoginViewModel() {
   var self = this;
   self.Title = ko.observable('SOME CONTENT');
-  self.UserName = ko.observable('asd');
-  self.Password = ko.observable('qwe');
+  self.UserName = ko.observable('8976843988');
+  self.Password = ko.observable('admin@123');
   self.Login = function () {
     services.postServiceWithToken(apiurls.User.Login + '?mobileno=' + self.UserName() + '&password=' + self.Password(), null, function (response) {
       debugger;
@@ -269,7 +363,7 @@ function LoginViewModel() {
       ons.notification.toast('Login Called!', {
         timeout: 2000
       });
-      window.location = 'index.html'
+      window.location = 'index.html';
     });
   };
   self.Register = function () {
@@ -281,7 +375,7 @@ function LoginViewModel() {
 
 function RegisterViewModel() {
   var self = this;
-  self.Mobile = ko.observable('SOME CONTENT');
+  self.Mobile = ko.observable('8976843988');
   self.CityName = ko.observable('asd');
   self.Email = ko.observable('nipesh@123.com');
   self.DisplayName = ko.observable('asd');
@@ -324,6 +418,11 @@ function RegisterViewModel() {
       location.href = '/login.html';
     });
   };
+
+  var ref = QueryStringValue("ref");
+  if (ref != null && ref != undefined) {
+    self.ReferralCode(ref);
+  }
 }
 
 function Points() {
@@ -375,6 +474,17 @@ function Referral() {
       });
     });
   };
+  self.Share = function () {
+    window.plugins.share.show(
+      {
+        subject: 'Join Tachukadi',
+        text: 'Join tachukadi and share your business with world, who really required that. Join with my referral code. ' + self.ReferralId() + ' or ' + self.ReferralIdMobile()
+      },
+      function () { }, // Success function
+      function () { alert('Share failed') } // Failure function
+    );
+  };
+
   self.GetReferralId();
   self.GetReferralTransactions();
 }
@@ -384,7 +494,8 @@ function SubmitblockViewModel() {
   var self = this;
   self.CatId = ko.observable(0);
   self.CityId = ko.observable(0);
-  self.Content = ko.observable('XX');
+  self.Title = ko.observable('');
+  self.Content = ko.observable('');
   self.StartDate = ko.observable(moment().format('YYYY-MM-DD'));
   self.EndDate = ko.observable(moment().format('YYYY-MM-DD'));
   self.AllCities = ko.observableArray([]);
@@ -397,9 +508,31 @@ function SubmitblockViewModel() {
     self.BlockCost(moment(newDate).diff(moment(self.StartDate()), 'days') + 1);
   }, self);
   self.SaveBlock = function () {
+
+    if (self.StartDate() > self.EndDate()) {
+      alert('Start date cannot be greater then End date');
+      return false;
+    }
+    if (self.Title().length == 0) {
+      alert('Title is required field.');
+      return false;
+    }
+    if (self.Content().length == 0) {
+      alert('Content is required field.');
+      return false;
+    }
+    if (!(Number(self.CityId()) > 0)) {
+      alert('City is required field.');
+      return false;
+    }
+    if (!(Number(self.CatId()) > 0)) {
+      alert('Category is required field.');
+      return false;
+    }
     var data = {};
     data['CatId'] = self.CatId();
     data['CityId'] = self.CityId();
+    data['Title'] = self.Title();
     data['Content'] = self.Content();
     data['StartDate'] = self.StartDate();
     data['EndDate'] = self.EndDate();
@@ -448,4 +581,13 @@ function SetStoredToken(token, mobile, city) {
   localStorage["tachukdi_token"] = token;
   localStorage["tachukdi_mobile"] = mobile;
   localStorage["tachukdi_city"] = city;
+}
+
+function QueryStringValue(name, url = window.location.href) {
+  name = name.replace(/[\[\]]/g, '\\$&');
+  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+    results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }

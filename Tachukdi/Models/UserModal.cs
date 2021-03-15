@@ -75,6 +75,7 @@ namespace Tachukdi.Models
   {
     public int CatId { get; set; }
     public int CityId { get; set; }
+    public string Title { get; set; }
     public string Content { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }

@@ -10,9 +10,10 @@
   <script src="Scripts/JSModals.js"></script>
   <script src="Scripts/MainScript.js"></script>
   <link href="Scripts/onsen-css-components.css" rel="stylesheet" />
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
   <!--<link href="Scripts/theme.css" rel="stylesheet" />-->
   <style>
-    ons-input, ons-radio, ons-checkbox, ons-search-input {
+    ons-input, ons-radio, ons-checkbox, ons-search-input, textarea {
       display: block;
       position: relative;
       width: auto;
@@ -21,6 +22,42 @@
 
     ons-range, ons-select {
       display: block;
+    }
+
+    .textarea {
+      box-sizing: border-box;
+      background-clip: padding-box;
+      font: inherit;
+      color: inherit;
+      background: transparent;
+      border: none;
+      vertical-align: top;
+      outline: none;
+      line-height: 1;
+      font-family: -apple-system, 'Helvetica Neue', 'Helvetica', 'Arial', 'Lucida Grande', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-weight: 400;
+      font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      font-weight: 400;
+      color: #07105E;
+      background-image: linear-gradient(to top, transparent 1px, #07105E 1px);
+      background-size: 100% 2px;
+      background-repeat: no-repeat;
+      background-position: center bottom;
+      background-color: transparent;
+      font-size: 16px;
+      font-weight: 400;
+      border: none;
+      padding-bottom: 2px;
+      border-radius: 0;
+      vertical-align: middle;
+      -webkit-transform: translate3d(0, 0, 0);
+      width: 100%;
+      display: inline-block;
+      padding: 10px;
+      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -33,16 +70,15 @@
         <div class="center" id="pageTitle">BLK 04/03/2021</div>
       </ons-toolbar>
       <ons-tabbar>
-        <ons-tab page="Citycateblock.html"
-                 icon="ion-md-home" active></ons-tab>
-        <ons-tab page="settings.html" onclick="pageChange('settings')"
-                 icon="ion-md-person" label="Settings"></ons-tab>
+        <ons-tab page="cityblock.html" icon="ion-md-home" active></ons-tab>
+        <!--<ons-tab page="submitblock.html" icon="ion-md-create"></ons-tab>-->
+        <ons-tab class="onlylogoff" page="qlogin.html" icon="ion-md-log-in"></ons-tab>
+        <ons-tab class="onlylogin" page="settings.html" style="display:none" icon="ion-md-settings"></ons-tab>
         <!--<ons-tab page="login.html" onclick="pageChange('login')"
                  icon="ion-md-person" label="Login"></ons-tab>
         <ons-tab page="register.html" onclick="pageChange('join')"
                  icon="ion-md-person" label="Join"></ons-tab>-->
-        <ons-tab page="submitblock.html" active icon="ion-md-person" label="+"></ons-tab>
-        <ons-tab page="submitblock.html" icon="ion-md-person" label="+"></ons-tab>
+        <!--<ons-tab page="login.html" icon="ion-md-person" label="+"></ons-tab>-->
       </ons-tabbar>
     </ons-page>
   </ons-template>
@@ -84,15 +120,35 @@
         <div class="center" data-bind="text:CityCategoryName"></div>
       </ons-toolbar>
       <ons-list data-bind="foreach: FullBlocks">
-        <ons-list-item modifier="longdivider">
+        <ons-list-item modifier="longdivider" expandable>
           <div class="center">
             <span class="list-item__title" data-bind="text: Content, click: $parent.detailsItem"></span>
-            <span data-bind="text: CreatedDate" class="list-item__subtitle"></span>
+            <!--<span data-bind="text: moment(CreatedDate()).format('DD MMM YYYY')" class="list-item__subtitle"></span>-->
           </div>
           <div class="right">
+            <!-- ko ifnot: IsLogin -->
             <a data-bind="attr:{ href: 'tel:' + MobileNo()}">
               <ons-icon icon="ion-ios-phone, material:md-phone"></ons-icon>
             </a>
+            <!-- /ko -->
+            <!-- ko if: IsLogin -->
+            <a href="#" data-bind="click: $parent.openLoginForm">
+              HELLO
+            </a>
+            <!-- /ko -->
+          </div>
+          <div class="expandable-content">
+            <span class="list-item__title" data-bind="text: Content"></span>
+            <!-- ko ifnot: IsLogin -->
+            <a data-bind="attr:{ href: 'tel:' + MobileNo()}">
+              <ons-icon icon="ion-ios-phone, material:md-phone"></ons-icon>
+            </a>
+            <!-- /ko -->
+            <!-- ko if: IsLogin -->
+            <a href="#" data-bind="click: $parent.openLoginForm">
+              Login
+            </a>
+            <!-- /ko -->
           </div>
         </ons-list-item>
       </ons-list>
@@ -112,18 +168,24 @@
       </ons-row>
     </ons-page>
   </ons-template>
+
   <ons-template id="settings.html">
     <ons-page id="settings-page">
       <ons-card>
+        <div class="title">
+          Settings
+        </div>
         <div class="content">
           <ons-list>
-            <ons-list-item><a href="#">Update Profile</a></ons-list-item>
-            <ons-list-item><a data-bind="click:LoadPoints">Points</a></ons-list-item>
-            <ons-list-item><a data-bind="click:LoadReferrals">Referrals</a></ons-list-item>
+            <!--<ons-list-item modifier="chevron" tappable>Update Profile</ons-list-item>-->
+            <ons-list-item data-bind="click:LoadPoints" modifier="chevron" tappable>Points</ons-list-item>
+            <ons-list-item data-bind="click:LoadReferrals" modifier="chevron" tappable>Referrals</ons-list-item>
+            <ons-list-item data-bind="click:SubmitAdd" modifier="chevron" tappable>Register Advertise</ons-list-item>
+            <ons-list-item data-bind="click:LogOff" modifier="chevron" tappable>Sign Out</ons-list-item>
           </ons-list>
         </div>
       </ons-card>
-      <style>
+      <!--<style>
         .content ons-list-item a {
           color: black;
           /* text-decoration: none; */
@@ -137,13 +199,14 @@
           border-bottom: 1px solid gray !important;
           margin-bottom: 2px;
         }
-      </style>
+      </style>-->
     </ons-page>
   </ons-template>
 
   <ons-template id="points.html">
     <ons-page id="points-page">
       <ons-toolbar>
+        <ons-back-button></ons-back-button>
         <div class="center">Points</div>
       </ons-toolbar>
       <div class="card">
@@ -180,6 +243,7 @@
   <ons-template id="referrals.html">
     <ons-page id="referrals-page">
       <ons-toolbar>
+        <ons-back-button></ons-back-button>
         <div class="center">Referrals</div>
       </ons-toolbar>
 
@@ -190,7 +254,7 @@
               Referral Code:
             </div>
             <div class="right">
-              <span data-bind="text: ReferralId"></span>
+              <span data-bind="text: ReferralId, click: Share"></span>
             </div>
           </ons-list-item>
           <ons-list-item>
@@ -270,7 +334,7 @@
       </ons-card>
     </ons-page>
   </ons-template>
-  
+
   <ons-template id="submitblock.html">
     <ons-page id="submitblock-page">
       <!--public int CatId { get; set; }
@@ -310,8 +374,12 @@
             </p>
             <p>
               <ons-input modifier="underbar" type="text"
-                         data-bind="value: Content"
-                         placeholder="Content" float></ons-input>
+                         data-bind="value: Title"
+                         placeholder="Title" float></ons-input>
+            </p>
+            <p>
+              <textarea modifier="underbar" class="textarea" rows="3" data-bind="value: Content"
+                        placeholder="Advertise Content"></textarea>
             </p>
             <p>
               <ons-input modifier="underbar" type="date"
@@ -328,6 +396,22 @@
             </p>
           </div>
       </ons-card>
+    </ons-page>
+  </ons-template>
+  <ons-template id="qlogin.html">
+    <ons-page id="qlogin-page">
+      <div style="text-align: center; margin: 50% 5%;">
+        <p>
+          <ons-input id="username" data-bind="value: UserName" modifier="underbar" placeholder="Username" float></ons-input>
+        </p>
+        <p>
+          <ons-input id="password" data-bind="value: Password" modifier="underbar" type="password" placeholder="Password" float></ons-input>
+        </p>
+        <p style="margin-top: 30px;">
+          <ons-button modifier="large" data-bind="click: Login">Sign In</ons-button><br /><br />
+          <ons-button modifier="large" onclick="location.href='register.html'">Sign Up</ons-button>
+        </p>
+      </div>
     </ons-page>
   </ons-template>
 </body>

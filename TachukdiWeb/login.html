@@ -1,11 +1,11 @@
-<link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+<!--<link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
 <link href="Scripts/onsen-css-components.css" rel="stylesheet" />
 <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
 <script src="Scripts/jquery-3.3.1.min.js"></script>
 <script src="Scripts/knockout/knockout-latest.min.js"></script>
 <script src="Scripts/moment.js/moment.min.js"></script>
 <script src="Scripts/JSModals.js"></script>
-<script src="Scripts/MainScript.js"></script>
+<script src="Scripts/MainScript.js"></script>-->
 <style>
   ons-input, ons-radio, ons-checkbox, ons-search-input {
     display: block;
@@ -19,7 +19,7 @@
   }
 </style>
 <ons-page id="login-page">
-  <div style="text-align: center; margin: 50% 0;">
+  <div style="text-align: center; margin: 50% 5%;">
     <p>
       <ons-input id="username" data-bind="value: UserName" modifier="underbar" placeholder="Username" float></ons-input>
     </p>
@@ -27,8 +27,8 @@
       <ons-input id="password" data-bind="value: Password" modifier="underbar" type="password" placeholder="Password" float></ons-input>
     </p>
     <p style="margin-top: 30px;">
-      <ons-button data-bind="click: Login">Sign In</ons-button>
-      <ons-button onclick="location.href='register.html'" >Sign Up</ons-button>
+      <ons-button modifier="large" data-bind="click: Login">Sign In</ons-button><br /><br />
+      <ons-button modifier="large" onclick="location.href='register.html'">Sign Up</ons-button>
     </p>
   </div>
 </ons-page>

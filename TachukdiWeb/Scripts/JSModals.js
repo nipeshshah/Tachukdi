@@ -19,6 +19,7 @@ function BlockCategoryModal() {
 
 function BlockModal() {
   var self = this;
+  self.IsLogin = ko.observable(false);
   self.Content = ko.observable('');
   self.MobileNo = ko.observable('');
   self.CreatedDate = ko.observable('');

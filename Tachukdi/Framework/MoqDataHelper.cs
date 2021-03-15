@@ -59,6 +59,7 @@ namespace Tachukdi.Framework
         CategoryId = block.CatId,
         CityId = block.CityId,
         CreatedDate = DateTime.UtcNow,
+        Title = block.Title,
         Content = block.Content,
         StartDate = block.StartDate,
         EndDate = block.EndDate,

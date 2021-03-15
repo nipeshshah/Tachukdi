@@ -25,5 +25,6 @@ namespace Tachukdi.Models.DBM
         public Nullable<bool> IsActive { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> PointTransactionId { get; set; }
+        public string Title { get; set; }
     }
 }

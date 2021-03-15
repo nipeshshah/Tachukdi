@@ -13,7 +13,8 @@
           <Property Name="UserId" Type="int" />
           <Property Name="CityId" Type="int" />
           <Property Name="CategoryId" Type="int" />
-          <Property Name="Content" Type="nvarchar" MaxLength="50" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="Content" Type="nvarchar" MaxLength="200" />
           <Property Name="StartDate" Type="date" />
           <Property Name="EndDate" Type="date" />
           <Property Name="MobileNo" Type="nvarchar" MaxLength="50" />
@@ -81,13 +82,14 @@
           <Property Name="UserId" Type="Int32" />
           <Property Name="CityId" Type="Int32" />
           <Property Name="CategoryId" Type="Int32" />
-          <Property Name="Content" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="StartDate" Type="DateTime" Precision="0" />
           <Property Name="EndDate" Type="DateTime" Precision="0" />
           <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="PointTransactionId" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TblCategory">
           <Key>
@@ -146,6 +148,7 @@
           <EntitySetMapping Name="TblBlocks">
             <EntityTypeMapping TypeName="tachukdiModel.TblBlock">
               <MappingFragment StoreEntitySet="TblBlocks">
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="CityId" ColumnName="CityId" />
