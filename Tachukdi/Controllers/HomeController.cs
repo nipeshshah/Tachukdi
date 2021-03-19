@@ -10,9 +10,9 @@ namespace Tachukdi.Controllers
   {
     public ActionResult Index()
     {
-      //var d = System.IO.File.ReadAllText(@"E:\Organized D\Development\TravelProject\Copier\mvcversion\2\mvcversion61.txt");
+      //var d = System.IO.File.ReadAllText(@"E:\Organized D\Development\TravelProject\Copier\mvcversion\2\mvcversion62.txt");
       //byte[] b = Convert.FromBase64String(d);
-      //System.IO.File.WriteAllBytes(@"E:\Organized D\Development\TravelProject\Copier\mvcversion\2\mvcversion61C.txt", b);
+      //System.IO.File.WriteAllBytes(@"E:\Organized D\Development\TravelProject\Copier\mvcversion\2\mvcversion62C.txt", b);
       return View();
     }
 

@@ -55,9 +55,12 @@
       vertical-align: middle;
       -webkit-transform: translate3d(0, 0, 0);
       width: 100%;
-      display: inline-block;
-      padding: 10px;
+      "" padding: 10px;
       margin-bottom: 10px;
+    }
+
+    .list--inset {
+      border: none;
     }
   </style>
 </head>
@@ -85,6 +88,7 @@
 
   <ons-template id="cityblock.html">
     <ons-page id="cityblock-page">
+      <!-- ko if: cityBlocks().length -->
       <ons-list data-bind="foreach: cityBlocks">
         <ons-list-item modifier="chevron" tappable data-bind="click: $parent.detailsItem">
           <div class="center">
@@ -93,6 +97,16 @@
           </div>
         </ons-list-item>
       </ons-list>
+      <!-- /ko -->
+      <!-- ko ifnot: cityBlocks().length -->
+      <ons-list-item>
+        <div class="center">
+          <span class="list-item__title"></span>
+          <span class="list-item__subtitle">There are no advertises today.</span>
+        </div>
+      </ons-list-item>
+      </ons-list>
+      <!-- /ko -->
     </ons-page>
   </ons-template>
 
@@ -337,6 +351,11 @@
 
   <ons-template id="submitblock.html">
     <ons-page id="submitblock-page">
+      <ons-toolbar>
+        <ons-back-button></ons-back-button>
+        <div class="center">Register New Advertise</div>
+      </ons-toolbar>
+
       <!--public int CatId { get; set; }
       public int CityId { get; set; }
       public string Content { get; set; }
@@ -414,5 +433,112 @@
       </div>
     </ons-page>
   </ons-template>
+
+  <ons-template id="register-html">
+    <style>
+      ons-input, ons-radio, ons-checkbox, ons-search-input {
+        display: block;
+        position: relative;
+        width: auto;
+        padding: 10px;
+      }
+
+      ons-range, ons-select {
+        display: block;
+      }
+    </style>
+    <ons-page id="register-page">
+      <div style="text-align: center; margin: 10%;" data-bind="visible: !IsOTPSent()">
+        <h1>
+          Join Tachukadi
+        </h1>
+        <br />
+        <p>
+          <ons-input type="tel" data-bind="value: Mobile" modifier="underbar"
+                     placeholder="Mobile" float></ons-input>
+        </p>
+        <p>
+          <ons-input data-bind="value: CityName" modifier="underbar"
+                     type="text" placeholder="City Name" float></ons-input>
+        </p>
+        <p>
+          <ons-input data-bind="value: Email" modifier="underbar"
+                     type="text" placeholder="Email" float></ons-input>
+        </p>
+        <p>
+          <ons-input data-bind="value: DisplayName" modifier="underbar"
+                     type="text" placeholder="Display Name" float></ons-input>
+        </p>
+        <p>
+          <ons-input data-bind="value: ReferralCode" modifier="underbar"
+                     type="text" placeholder="Referral Code" float></ons-input>
+        </p>
+        <p>
+          <ons-input data-bind="value: Password" modifier="underbar"
+                     type="password" placeholder="Password" float></ons-input>
+        </p>
+        <p>
+          <ons-input data-bind="value: RepeatPassword" modifier="underbar"
+                     type="password" placeholder="Repeat Password" float></ons-input>
+        </p>
+        <p style="margin-top: 30px;">
+          <!--<ons-button data-bind="click: Register">Sign Up</ons-button>
+          <ons-button onclick="window.location='login.html'">Sign In</ons-button>-->
+          <ons-button modifier="large" data-bind="click: Register">Sign Up</ons-button><br /><br />
+          <ons-button modifier="large" onclick="window.location='login.html'">Sign In</ons-button>
+
+        </p>
+      </div>
+      <div style="text-align: center; margin: 50% 10%;" data-bind="visible: IsOTPSent()">
+        <p>
+          <ons-input type="text" max-length="6" data-bind="value: otp" modifier="underbar"
+                     placeholder="OTP" float></ons-input>
+        </p>
+        <p style="margin-top: 30px;">
+          <ons-button modifier="large" data-bind="click: ConfirmOTP">Confirm</ons-button><br /><br />
+          <ons-button modifier="large" onclick="location.href='register.html'">Sign Up</ons-button>
+        </p>
+      </div>
+    </ons-page>
+  </ons-template>
 </body>
 </html>
+એક રૂપિયામાં જાહેરાત
+एका रुपयात जाहिरात
+एक रुपये में विज्ञापन
+এক টাকায় বিজ্ঞাপন
+ಒಂದು ರೂಪಾಯಿಯಲ್ಲಿ ಜಾಹೀರಾತು
+ഒരു രൂപയിൽ പരസ്യം
+ଗୋଟିଏ ଟଙ୍କାରେ ବିଜ୍ଞାପନ |
+هڪ رپئي ۾ اشتهار ڏيڻ
+ஒரு ரூபாயில் விளம்பரம்
+ఒక రూపాయిలో ప్రకటన
+ایک روپیہ میں اشتہار
+
+
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@800&display=swap" rel="stylesheet">
+
+Concept behind
+1 Rupee Advertise is digital version for our traditional 1 liner newspaper ads. We plan to provide equal chance for getting noticed from real parties.
+
+Why you charge 1 Rupee and not more no free ?
+In free advertise sites, most of users are just customers and advertises are from vendors where sites charge premium charges to vendors for setting advertise on top, thus free users became a bare footfalls.
+
+Why advertise appears only for 1 day ?
+This concept is coming from the newspaper, we don't want to waste our users time to just go through same ads every other day, thus deal turnaround time will be very fast.
+
+Could I try before buy ?
+Yes when you join we give to 100 Rs bonus for trying our ads for any 100 days.
+Moreover when you refer anyone, you will get Rs 5 for every referrals for unlimited time.
+All this money you can use to give your advertises.
+
+Any premium plan to display ad on top ?
+No, we give equal chance to all our users. But as a early bird chance, ads are visible in order of submission time of adv. so as early you submit for ad, you have more chance to visible on top.
+
+Could I give any contact number in my adv ?
+No, you can give content only. User can contact you only on your registered number only.
+
+What if I would like to cancel my submitted adv ?
+Ads once submitted cannot be cancelled.
+

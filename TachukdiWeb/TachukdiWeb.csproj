@@ -70,7 +70,7 @@
     <Content Include="dashboard.html" />
     <Content Include="index.html" />
     <Content Include="login.html" />
-    <Content Include="register.html" />
+    <Content Include="Xregister.html" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\JSModals.js" />

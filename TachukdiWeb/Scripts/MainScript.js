@@ -143,7 +143,7 @@ document.addEventListener('init', function (event) {
   }
   else {
     // Everything else by ID
-    debugger;
+    // debugger;
     var viewModel = page.id.charAt(0).toUpperCase() + (page.id.split('-')[0] || '').slice(1) + 'ViewModel';
     //console.log("Current View Model " + page.id + " & " + viewModel);
     if (window[viewModel]) {
@@ -186,13 +186,19 @@ function SettingsViewModel() {
   };
 
   self.SubmitAdd = function () {
-    debugger;
     document.querySelector('ons-navigator')
       .pushPage('submitblock.html', {
         data: { viewModel: new SubmitblockViewModel() }
       });
   }
 }
+
+document.addEventListener('postchange', function (event) {
+  console.log('postchange event', event);
+  if (event.tabItem.getAttribute("page") === "settings.html") {
+    $('#pageTitle').html("Settings"); 
+  }
+});
 
 function CityblockViewModel() {
   var self = this;
@@ -358,7 +364,6 @@ function LoginViewModel() {
   self.Password = ko.observable('admin@123');
   self.Login = function () {
     services.postServiceWithToken(apiurls.User.Login + '?mobileno=' + self.UserName() + '&password=' + self.Password(), null, function (response) {
-      debugger;
       SetStoredToken(response.token, response.mobileno, response.city);
       ons.notification.toast('Login Called!', {
         timeout: 2000
