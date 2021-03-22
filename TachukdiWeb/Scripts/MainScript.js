@@ -145,7 +145,7 @@ document.addEventListener('init', function (event) {
     // Everything else by ID
     // debugger;
     var viewModel = page.id.charAt(0).toUpperCase() + (page.id.split('-')[0] || '').slice(1) + 'ViewModel';
-    //console.log("Current View Model " + page.id + " & " + viewModel);
+    console.log("Current View Model " + page.id + " & " + viewModel);
     if (window[viewModel]) {
       ko.applyBindings(new window[viewModel](), event.target);
     }
@@ -181,6 +181,13 @@ function SettingsViewModel() {
       });
   };
 
+  self.ShowFAQ = function () {
+    document.querySelector('ons-navigator')
+      .pushPage('Faq.html', {
+        data: { viewModel: new FaqViewModel() }
+      });
+  };
+
   self.LogOff = function () {
     SetStoredToken("", "", "");
   };
@@ -197,6 +204,12 @@ document.addEventListener('postchange', function (event) {
   console.log('postchange event', event);
   if (event.tabItem.getAttribute("page") === "settings.html") {
     $('#pageTitle').html("Settings"); 
+  }
+  else if (event.tabItem.getAttribute("page") === "qlogin.html") {
+    $('#pageTitle').html("Sign In");
+  }
+  else if (event.tabItem.getAttribute("page") === "Faq.html") {
+    $('#pageTitle').html("F.A.Q.");
   }
 });
 
@@ -371,10 +384,15 @@ function LoginViewModel() {
       window.location = 'index.html';
     });
   };
-  self.Register = function () {
-    ons.notification.toast('Register Called!', {
-      timeout: 2000
-    });
+  
+  self.RedirectRegister = function () {
+    //ons.notification.toast('Register Called!', {
+    //  timeout: 2000
+    //});
+    document.querySelector('ons-navigator')
+      .pushPage('register.html', {
+        data: { viewModel: new RegisterViewModel() }
+      });
   };
 }
 
@@ -428,6 +446,10 @@ function RegisterViewModel() {
   if (ref != null && ref != undefined) {
     self.ReferralCode(ref);
   }
+
+  //self.RedirectLogin(){
+
+  //}
 }
 
 function Points() {
@@ -571,6 +593,10 @@ function SubmitblockViewModel() {
   };
   self.LoadCategories();
   self.LoadCities();
+}
+
+function FaqViewModel() {
+
 }
 
 function GetStoredToken() {
